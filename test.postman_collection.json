@@ -1,0 +1,290 @@
+{
+	"info": {
+		"_postman_id": "37a40ae0-97c9-4bee-a825-26edf132d997",
+		"name": "test",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Register",
+			"request": {
+				"auth": {
+					"type": "basic"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "email",
+							"value": "davidkostictest+test3@gmail.com",
+							"type": "default"
+						},
+						{
+							"key": "password",
+							"value": "Password123456789!",
+							"type": "default"
+						},
+						{
+							"key": "name",
+							"value": "David",
+							"type": "default"
+						},
+						{
+							"key": "surname",
+							"value": "Kostic",
+							"type": "default"
+						}
+					],
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/register",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Request reset",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"davidkostictest+test4@gmail.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/requestpassword",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"requestpassword"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Acc activation",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "",
+							"value": "",
+							"type": "default"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/confirmation?token=j9QQTU8BCQYdSeaArOgB728CjooBxoP2zXw_exGqgPo",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"confirmation"
+					],
+					"query": [
+						{
+							"key": "token",
+							"value": "j9QQTU8BCQYdSeaArOgB728CjooBxoP2zXw_exGqgPo"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Reset password",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "password",
+							"value": "Ovojenovasifra123!",
+							"type": "default"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/resetpassword?token=5fm6-5vv0vks4_QqR-st1MWeCpQPpdFC1XAh_M1oUK0",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"resetpassword"
+					],
+					"query": [
+						{
+							"key": "token",
+							"value": "5fm6-5vv0vks4_QqR-st1MWeCpQPpdFC1XAh_M1oUK0"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/token",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "",
+						"value": "",
+						"type": "default",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "grant_type",
+							"value": "password",
+							"type": "default"
+						},
+						{
+							"key": "username",
+							"value": "davidkostictest+test4@gmail.com",
+							"type": "default"
+						},
+						{
+							"key": "password",
+							"value": "Ovojenovasifra123!",
+							"type": "default"
+						},
+						{
+							"key": "client_id",
+							"value": "742603ef88d1341b5a26eb250121904c",
+							"type": "default"
+						},
+						{
+							"key": "client_secret",
+							"value": "ba9fa26873ca3849f1f16924563d8d09f3e06fd32d35d7ca0c436092521b3cab45cb409d7ae711c4d9b2509be879267dda0025c538330691e31a465814bf76c0",
+							"type": "default"
+						}
+					],
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/token",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Edit",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI3NDI2MDNlZjg4ZDEzNDFiNWEyNmViMjUwMTIxOTA0YyIsImp0aSI6IjU2NGE3NmQwZDg4M2NjM2I1MWExYjM3MDUyZDM3YzJkNTg1MDEwYWM4ZmVhYmYzZDBmYzVkMmMxYjA3MGJjYmI3OTIyM2VkYzk1NzE3ODU0IiwiaWF0IjoxNjYxNjI3MDk3LjcyNDYwNiwibmJmIjoxNjYxNjI3MDk3LjcyNDYwOCwiZXhwIjoxNjYxNjI3OTk3LjY3NDIxNCwic3ViIjoiZGF2aWRrb3N0aWN0ZXN0K3Rlc3Q0QGdtYWlsLmNvbSIsInNjb3BlcyI6WyJ1c2VyIl19.O9gS7VJMlpJbPUj9avl32xibLW0mIlgRQOXVhn6Mh1tV9RBw1C5UYalmFq1a3Y9Ea86llEA77j1_XMFY2ZfkeGkznfQy4tIyKHMgfU-k8hIHDiOMIisBGvAtbUpJCf_ZjJp_QUnPuiwsZec27eBDa2TDuz0XNZvU4o2oltZd13wBqRFmWA89Xio_Hpm-JtsesGif0rHqjETbqi5MFIfC3eK7F-SurZ4m_6X-1M50e08sAlNVMCffi3upfa5st0_fShb_RoeNcCJCRdW4opCtslxRm1qGFKl49wk2gJviw35DxMd3FUCY5n53T87Lvy3LtydRQ2NWD1bWz8AOwiMVeA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "name",
+							"value": "Marko",
+							"type": "default"
+						},
+						{
+							"key": "surname",
+							"value": "Nikolic",
+							"type": "default"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/edit",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"edit"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
