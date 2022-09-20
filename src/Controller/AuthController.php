@@ -15,26 +15,27 @@ use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Serializer\SerializerInterface;
 use App\My\Regex;
 use Doctrine\ORM\EntityManagerInterface;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\Mailer\Mailer;
 use Symfony\Component\Mailer\Transport;
 use Symfony\Component\Mime\Address;
 use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Csrf\TokenGenerator\TokenGeneratorInterface;
-use Symfony\Flex\Response as FlexResponse;
 use Throwable;
+use Monolog\Level;
+use Monolog\Logger;
+use Monolog\Handler\StreamHandler;
 
 
 class AuthController extends AbstractController
 {
-
-
     public function __construct(
         private EntityManagerInterface $em,
         private UserRepository $userRepository,
         private Security $security,
         private SerializerInterface $serializerInterface,
-        private UserPasswordHasherInterface $hasher
+        private UserPasswordHasherInterface $hasher,
     ) {
     }
 
@@ -51,8 +52,12 @@ class AuthController extends AbstractController
             try {
                 $token = $tokenGeneratorInterface->generateToken();
                 $user->setEmail($request->request->all()["email"]);
-                $user->setName($request->request->all()["name"]);
-                $user->setSurname($request->request->all()["surname"]);
+                if (isset($request->request->all()["name"])) {
+                    $user->setName($request->request->all()["name"]);
+                }
+                if (isset($request->request->all()["surname"])) {
+                    $user->setSurname($request->request->all()["surname"]);
+                }
                 $user->setConfirmationCode($token);
                 $user->setConfirmed(false);
                 $password = $request->request->all()["password"];
@@ -70,8 +75,6 @@ class AuthController extends AbstractController
                 $dsn = Transport::fromDsn($_ENV["MAILER_DSN"]);
                 $mailer = new Mailer($dsn);
                 $mailer->send($email);
-
-                return new Response($url);
             } catch (\Throwable $th) {
                 return new Response($th->getMessage());
             }
@@ -79,7 +82,7 @@ class AuthController extends AbstractController
             return new Response($form->getErrors(true));
         }
 
-        return new JsonResponse([$form->isValid()], Response::HTTP_CREATED);
+        return new JsonResponse("Uspesno ste se registrovali. Na Vas mejl je stigao link preko kojeg mozete aktivirati nalog", Response::HTTP_CREATED);
     }
 
     # Ovde aktiviramo korisnika, odnosno potvrdjujemo njegov identitet
