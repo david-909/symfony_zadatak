@@ -29,6 +29,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @var string The hashed password
+     * @Assert\NotBlank(message = "Lozinka je obavezna.")
      * @Assert\Regex(
      *     pattern="/(.*[A-Z].*)$/",
      *     match=true,
