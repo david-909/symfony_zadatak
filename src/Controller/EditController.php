@@ -6,7 +6,9 @@ use App\Entity\User;
 use App\Form\UserType;
 use Doctrine\ORM\EntityManagerInterface;
 use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
+use stdClass;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -43,5 +45,17 @@ class EditController extends AbstractController
         }
 
         return new Response($form->getErrors(true));
+    }
+
+    #[Route('/api/user', name: 'api_user', methods: ["GET"])]
+    public function user(Request $request): Response
+    {
+        $userEmail = $this->security->getToken()->getUser()->getUserIdentifier();
+        $user = $this->em->getRepository(User::class)->findOneBy(["email" => $userEmail]);
+        $userData = new stdClass();
+        $userData->name = $user->getName();
+        $userData->surname = $user->getSurname();
+
+        return new JsonResponse($userData);
     }
 }

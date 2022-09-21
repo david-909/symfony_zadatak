@@ -17,7 +17,7 @@ league_oauth2_server:
 
         # How long the issued access token should be valid for.
         # The value should be a valid interval: http://php.net/manual/en/dateinterval.construct.php#refsect1-dateinterval.construct-parameters
-        access_token_ttl:     PT15M
+        access_token_ttl:     PT45M
 
         # How long the issued refresh token should be valid for.
         # The value should be a valid interval: http://php.net/manual/en/dateinterval.construct.php#refsect1-dateinterval.construct-parameters
