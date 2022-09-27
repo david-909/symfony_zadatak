@@ -41,7 +41,7 @@ class EditController extends AbstractController
             $this->em->flush();
             $this->em->persist($user);
 
-            return new Response("Uspesno ste promenili Vase podatke.");
+            return new Response("Uspesno ste promenili Vase podatke.", Response::HTTP_OK);
         }
 
         return new Response($form->getErrors(true));
