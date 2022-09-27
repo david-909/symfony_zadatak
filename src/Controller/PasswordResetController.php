@@ -36,9 +36,9 @@ class PasswordResetController extends AbstractController
     #[Route('/api/requestpassword', name: 'api_request_reset', methods: ["POST"])]
     public function requestReset(Request $request, TokenGeneratorInterface $tokenGeneratorInterface)
     {
-        $userEmail = json_decode($request->getContent());
+        $userEmail = $request->request->all()["email"];
 
-        $user = $this->em->getRepository(User::class)->findOneBy(["email" => $userEmail->email]);
+        $user = $this->em->getRepository(User::class)->findOneBy(["email" => $userEmail]);
         if ($user) {
             $token = $tokenGeneratorInterface->generateToken();
             $reset = new PasswordResets();
@@ -51,10 +51,11 @@ class PasswordResetController extends AbstractController
         } else {
             return new JsonResponse(["message" => "Nismo pronasli korisnika sa tim mejlom"]);
         }
-        $url = $this->generateUrl("api_password_reset", ["token" => $token], UrlGeneratorInterface::ABSOLUTE_URL);
+        #$url = $this->generateUrl("api_password_reset", ["token" => $token], UrlGeneratorInterface::ABSOLUTE_URL);
+        $url = "http://127.0.0.1:4200/reset?token=" . $token;
         $email = new Email();
         $email->from(new Address('passwordreset@example.com', 'Password reset'))
-            ->to($userEmail->email)
+            ->to($userEmail)
             ->subject("Password reset")
             ->text("Link to reset your password: $url");
 
@@ -62,7 +63,7 @@ class PasswordResetController extends AbstractController
         $mailer = new Mailer($dsn);
         $mailer->send($email);
 
-        return new Response($url);
+        return new JsonResponse(["token" => $token, "message" => "Poslali smo mejl preko kog mozete podesiti novu lozinku"], Response::HTTP_OK);
     }
 
     #[Route('/api/resetpassword', name: 'api_password_reset', methods: ["POST"])]
@@ -81,7 +82,7 @@ class PasswordResetController extends AbstractController
                 $passwordReset->setDidReset(1);
                 $user->setPassword($newHashedPassword);
                 $this->em->flush();
-                return new Response("Uspesno ste promenili lozinku.");
+                return new JsonResponse("Uspesno ste promenili lozinku.", Response::HTTP_OK);
             } catch (\Throwable $th) {
                 return new Response($th->getMessage());
             }
