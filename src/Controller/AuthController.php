@@ -79,7 +79,7 @@ class AuthController extends AbstractController
                 return new Response($th->getMessage());
             }
         } else {
-            return new Response($form->getErrors(true));
+            return new Response($form->getErrors(true), Response::HTTP_UNPROCESSABLE_ENTITY);
         }
 
         return new JsonResponse("Uspesno ste se registrovali. Na Vas mejl je stigao link preko kojeg mozete aktivirati nalog", Response::HTTP_CREATED);
