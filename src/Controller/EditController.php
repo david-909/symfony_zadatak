@@ -42,9 +42,9 @@ class EditController extends AbstractController
             $this->em->persist($user);
 
             return new Response("Uspesno ste promenili Vase podatke.", Response::HTTP_OK);
+        } else {
+            return new Response($form->getErrors(true), Response::HTTP_UNPROCESSABLE_ENTITY);
         }
-
-        return new Response($form->getErrors(true));
     }
 
     #[Route('/api/user', name: 'api_user', methods: ["GET"])]
