@@ -84,10 +84,10 @@ class PasswordResetController extends AbstractController
                 $this->em->flush();
                 return new JsonResponse("Uspesno ste promenili lozinku.", Response::HTTP_OK);
             } catch (\Throwable $th) {
-                return new Response($th->getMessage());
+                return new Response($th->getMessage(), Response::HTTP_UNPROCESSABLE_ENTITY);
             }
         } else {
-            return new Response($form->getErrors(true));
+            return new Response($form->getErrors(true), Response::HTTP_UNPROCESSABLE_ENTITY);
         }
     }
 }
